@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-using i18n.Helpers;
 
 namespace i18n
 {
@@ -80,7 +79,7 @@ namespace i18n
         /// <remarks>
         /// Presently, only Scheme1 and Scheme2 are supported by this class.
         /// </remarks>
-        public static UrlLocalizationScheme UrlLocalizationScheme = UrlLocalizationScheme.Scheme1;
+        public static UrlLocalizationScheme UrlLocalizationScheme = UrlLocalizationScheme.Void;
 
         /// <summary>
         /// Describes one or more procedures for filtering a URL during Early URL Localization.
@@ -104,7 +103,7 @@ namespace i18n
         /// <remarks>
         /// This filtering in performed in addition to any custom IncomingUrlFilters/OutgoingUrlFilters filters.
         /// </remarks>
-        public static Regex QuickUrlExclusionFilter = new System.Text.RegularExpressions.Regex(@"(?:sitemap\.xml|\.css|\.jpg|\.jpeg|\.png|\.gif|\.ico|\.svg|\.woff|\.woff2|\.ttf|\.eot)$", RegexOptions.IgnoreCase);
+        public static Regex QuickUrlExclusionFilter = new System.Text.RegularExpressions.Regex(@"(?:sitemap\.xml|\.css|\.jpg|\.png|\.svg|\.woff|\.eot)$");
 
         /// <summary>
         /// Filters that examines the request URL during Early URL Localization

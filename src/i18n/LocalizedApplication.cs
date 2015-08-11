@@ -220,9 +220,8 @@ namespace i18n
 
         public LocalizedApplication(IRootServices i_RootServices = null)
         {
-
             // Default settings.
-            DefaultLanguage = ("en");
+            DefaultLanguage = ("en-NZ");
             MessageKeyIsValueInDefaultLanguage = true;
             PermanentRedirects = false;
 
@@ -255,7 +254,7 @@ namespace i18n
                 {
                     Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = langtag.GetCultureInfo();
                 }
-            };
+            };            
         }
 
         private static LocalizedApplication current;

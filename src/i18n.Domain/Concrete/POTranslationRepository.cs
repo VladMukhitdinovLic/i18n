@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -57,14 +56,10 @@ namespace i18n.Domain.Concrete
 				{
 					try
 					{
-					    var lt = new LanguageTag(dir);
-					    if (lt.CultureInfo == null)
-					        throw new CultureNotFoundException(dir);
-						lang = new Language
-						{
-						    LanguageShortTag = dir
-						};
-					    dirList.Add(lang);
+						System.Globalization.CultureInfo.GetCultureInfo(dir);
+						lang = new Language();
+						lang.LanguageShortTag = dir;
+						dirList.Add(lang);
 					}
 					catch (System.Globalization.CultureNotFoundException) 
 					{ 
@@ -77,9 +72,17 @@ namespace i18n.Domain.Concrete
 				//see if the desired language was one of the returned from settings
 				foreach (var language in languages)
 				{
-					lang = new Language();
-					lang.LanguageShortTag = language;
-					dirList.Add(lang);
+                    try
+                    {
+                        System.Globalization.CultureInfo.GetCultureInfo(language);
+                        lang = new Language();
+                        lang.LanguageShortTag = language;
+                        dirList.Add(lang);
+                    }
+                    catch (System.Globalization.CultureNotFoundException)
+                    {
+                        //There is a directory in the locale directory that is not a valid culture so ignore it
+                    }
 				}
 			}
 

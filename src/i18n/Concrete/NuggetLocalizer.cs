@@ -63,18 +63,14 @@ namespace i18n
                 if (_textLocalizer == null) {
                     return "test.message"; }
                // Lookup resource using canonical msgid.
-				message = _textLocalizer.GetText(
-                    true, // true = try lookup with HtmlDecoded-msgid if lookup with raw msgid fails.
-                    nugget.MsgId,
-                    nugget.Comment,
-                    languages,
-                    out lt);
+				message = _textLocalizer.GetText(HttpUtility.HtmlDecode(nugget.MsgId), HttpUtility.HtmlDecode(nugget.Comment), languages, out lt) ?? nugget.MsgId;
                //
                 if (nugget.IsFormatted) {
                    // Convert any identifies in a formatted nugget: %0 -> {0}
                     message = ConvertIdentifiersInMsgId(message);
                    // Format the message.
                     var formatItems = new List<string>(nugget.FormatItems);
+
                     try {
                         // translate nuggets in parameters 
                         for (int i = 0; i < formatItems.Count; i++)
@@ -96,7 +92,7 @@ namespace i18n
                 }
                // Output modified message (to be subsituted for original in the source entity).
                 DebugHelpers.WriteLine("I18N.NuggetLocalizer.ProcessNuggets -- msgid: {0,35}, message: {1}", nugget.MsgId, message);
-               //
+
                 if (_settings.VisualizeMessages)
                 {
                     string languageToken = string.Empty;
@@ -107,9 +103,7 @@ namespace i18n
                         endToken = _settings.NuggetVisualizeEndToken;
                     message = string.Format("{0}{1}{2}{3}", _settings.NuggetVisualizeToken, languageToken, message, endToken);
                 }
-                return message;
-                    // NB: this was originally returning HttpUtility.HtmlEncode(message).
-                    // Ref #105 and #202 as to why changed back to returning message as is.
+                return HttpUtility.HtmlDecode(message);
             });
            // Return modified entity.
             return entityOut;

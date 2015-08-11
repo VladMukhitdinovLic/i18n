@@ -11,7 +11,6 @@ using System.Web.Hosting;
 using i18n.Domain.Abstract;
 using i18n.Domain.Entities;
 using i18n.Domain.Concrete;
-using i18n.Helpers;
 
 namespace i18n
 {
@@ -58,8 +57,10 @@ namespace i18n
 
                 // Ensure default language is included in AppLanguages where appropriate.
                 if (LocalizedApplication.Current.MessageKeyIsValueInDefaultLanguage
-                    && !languages.Any(x => LocalizedApplication.Current.DefaultLanguageTag.Equals(x))) {
-                    languages.Add(LocalizedApplication.Current.DefaultLanguageTag.ToString()); }
+                    && !languages.Any(x => LocalizedApplication.Current.DefaultLanguageTag.Equals(x)))
+                {
+                    languages.Add(LocalizedApplication.Current.DefaultLanguageTag.ToString());
+                }
 
                 foreach (var langtag in languages)
                 {
